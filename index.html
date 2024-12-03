@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <h2>Greg's Library</h2>
+      </header>
+
+      <dialog open>
+        <form method="get" id="book-form" action="">
+          <label for="title">Book title: </label>
+          <input type="text" id="title" name="title" /><br /><br />
+          <label for="author">Author:</label>
+          <input type="text" id="author" name="author" /><br /><br />
+          <label for="pages">Pages:</label>
+          <input type="number" id="pages" name="pages" /><br /><br />
+          <label for="read">Read the book?</label>
+          <input type="checkbox" name="status" id="status" />
+
+          <input type="submit" id="submit" value="Submit" />
+          <button id="close" type="button" formmethod="dialog">Close</button>
+        </form>
+      </dialog>
+
+      <div class="main-content">
+        <div class="buttons">
+          <button class="add" onClick="generateCard()">Add Book</button>
+        </div>
+        <div class="cards">
+          <div class="card-one">
+            <div class="delete-button"><button class="delete">X</button></div>
+            <div class="card-info">
+              <p>Title: The Hobbit</p>
+              <p>Author: J.R.R. Tolkein</p>
+              <p>Pages: 265</p>
+              <p>Read: Yes</p>
+              <button class="read-button read-button:hover">
+                Change Status
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
