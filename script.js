@@ -70,53 +70,53 @@ const myLibrary = [];
 
 function addBooktoLibrary(book) {
   myLibrary.push(book);
-  generateCard(book);
+  generateCard();
 }
 
-function generateCard(book) {
-  const newDiv = document.createElement("div");
-  const newDiv2 = document.createElement("div");
+function generateCard() {
+  myLibrary.forEach((book, index) => {
+    const newDiv = document.createElement("div");
+    const newDiv2 = document.createElement("div");
 
-  //Creating a new book card
-  newDiv.classList.add("card-one");
-  // //adding new Delete Button Div and Delete Button
-  newDiv2.classList.add("delete-button");
-  const deleteButton = document.createElement("button");
-  deleteButton.innerHTML = "X";
-  deleteButton.classList.add("delete");
+    //Creating a new book card
+    newDiv.classList.add("card-one");
+    // //adding new Delete Button Div and Delete Button
+    newDiv2.classList.add("delete-button");
+    const deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "X";
+    deleteButton.classList.add("delete");
 
-  newDiv2.appendChild(deleteButton);
-  newDiv.appendChild(newDiv2);
-  //adding delete functionatlity to newly generated deletebuttons
-  deleteButton.addEventListener("click", function () {
-    newDiv.remove();
-  });
-  //Adding new Card Info div
-  const newCardInfo = document.createElement("div");
-  newCardInfo.classList.add("card-info");
-  newDiv.appendChild(newCardInfo);
+    newDiv2.appendChild(deleteButton);
+    newDiv.appendChild(newDiv2);
+    //adding delete functionatlity to newly generated deletebuttons
+    deleteButton.addEventListener("click", function () {
+      newDiv.remove();
+    });
+    //Adding new Card Info div
+    const newCardInfo = document.createElement("div");
+    newCardInfo.classList.add("card-info");
+    newDiv.appendChild(newCardInfo);
 
-  // //add new paragraph content elements
+    // //add new paragraph content elements
 
-  newCardInfo.innerHTML = `<h3>Title: ${book.title} </h3>
+    newCardInfo.innerHTML = `<h3>Title: ${book.title} </h3>
   <p>Author: ${book.author}</p>
   <p>Pages: ${book.pages}</p>
-  <p>Read: ${book.status}</p>;`;
+  <p>Read: ${book.submittedIsRead == "true" ? "Yes" : "No"}</p>
+  
+  <div class='status-button'>
+    <button class="read-button read-button:hover" data-index=${index}>Change Status</button>
+  </div>`;
 
-  cardsSpace.appendChild(newDiv);
-  //adding read button
-  const readButton = document.createElement("button");
-  readButton.innerHTML = "Change Status";
-  readButton.classList.add("read-button");
-  readButton.classList.add("read-button:hover");
-  newCardInfo.appendChild(readButton);
+    cardsSpace.appendChild(newDiv);
+  });
 }
 
-function Book(title, author, pages, status) {
+function Book(title, author, pages, submittedIsRead) {
   this.title = title;
   this.author = author;
   this.pages = pages;
-  this.status = status;
+  this.submittedIsRead = submittedIsRead;
 }
 
 const submitBtn = document.getElementById("submit");
@@ -128,12 +128,21 @@ form.addEventListener("submit", (event) => {
   const title = document.querySelector("#title").value;
   const author = document.querySelector("#author").value;
   const pages = document.querySelector("#pages").value;
-  const status = document.querySelector("#status");
+  const submittedIsRead = isRead.checked ? "true" : "false";
 
-  const book = new Book(title, author, pages, status);
+  const book = new Book(title, author, pages, submittedIsRead);
   addBooktoLibrary(book);
   form.reset();
   dialog.close();
-  let index = myLibrary.indexOf(book);
-  let bookStatus = myLibrary[index].status;
+  return book;
+});
+
+document.querySelectorAll(".read-button").forEach((button) => {
+  button.addEventListener("click", (e) => {
+    const bookIndex = e.currentTarget.getAttribute("data-index");
+    console.log(bookIndex);
+    if (bookIndex !== null) {
+      book.submittedIsRead = book.submittedIsRead === "true" ? "false" : "true";
+    }
+  });
 });
